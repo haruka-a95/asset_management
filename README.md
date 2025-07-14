@@ -114,11 +114,11 @@ chmod -R 777 storage/
 ### 確認
 
 - WEB ※ **IP・ポート番号は [`.env`](./.env) の `IP`・`PORT_WEB` を参照**
-  - <http://127.0.0.1:80/> （デフォルト設定のURL）  
+  - <http://127.0.0.1:81/>   
     [routes/web.php](./root/routes/web.php)のURI「`'/'`」の実行結果が画面に表示されます。  
     VSCodeの[Docker拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)が入っている場合、対象コンテナの「Open in Browser」でも開けます。  
 - phpMyAdmin ※ **IP・ポート番号は [`.env`](./.env) の `IP`・`PORT_PHPMYADMIN` を参照**
-  - <http://127.0.0.1:8080> （デフォルト設定のURL）  
+  - <http://127.0.0.1:8081>
     VSCodeの[Docker拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)が入っている場合、対象コンテナの「Open in Browser」でも開けます。  
 
 ### SQLクライアント
