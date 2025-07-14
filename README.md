@@ -121,27 +121,6 @@ chmod -R 777 storage/
   - <http://127.0.0.1:8081>
     VSCodeの[Docker拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)が入っている場合、対象コンテナの「Open in Browser」でも開けます。  
 
-### SQLクライアント
-
-こちらは任意です。
-
-- `DBeaver`
-  - <https://dbeaver.io/>
-  - 接続情報 ※ [`.env`](./.env) の情報にあわせて設定すること
-    - ドライバ名: `MySQL`
-    - ServerHost: `localhost`  ～  `IP` 参照 (localhost = 127.0.0.1)
-    - Port: `3306`  ～  `PORT_DB` 参照
-    - Database: ※ 未入力でOK
-    - ユーザー名: `root`
-    - パスワード: `root`  ～  `DB_ROOT_PASSWORD` 参照
-- `A5:SQL Mk-2`
-  - <https://a5m2.mmatsubara.com/>
-  - 接続情報 ※ [`.env`](./.env) の情報にあわせて設定すること
-    - ホスト名: `localhost`  ～  `IP` 参照 (localhost = 127.0.0.1)
-    - ユーザーID: `root`
-    - パスワード: `root`  ～  `DB_ROOT_PASSWORD` 参照
-    - ポート番号: `3306`  ～  `PORT_DB` 参照
-
 ### Laravel設定
 
 #### 言語ファイルダウンロード
@@ -223,3 +202,71 @@ composer require --dev barryvdh/laravel-debugbar
 # config/debugbar.php を追加。
 php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 ```
+
+# プロジェクト概要
+| 項目      | 内容                                                             |
+| ------- | -------------------------------------------------------------- |
+| プロジェクト名 | 企業向け資産管理システム開発                                                 |
+| 期間      | 約 1 年 2 ヶ月                                     |
+| チーム規模   | 5名（PM 1名、設計者 1名、開発 3名）                                         |
+| 開発環境    | Laravel 9 / PHP 8.1 / MySQL / Git / Docker / Tailwind / Blade |
+| 担当範囲    | 詳細設計、画面設計書修正、DB設計、実装、結合テスト                                     |
+
+# システム概要
+社内のIT資産（PC、モニタ、ライセンス、モバイル端末など）を一元管理し、
+棚卸、貸出/返却、メンテナンス履歴、保証期限などを管理できるWebシステム。
+
+# 担当業務の詳細
+① 画面設計・詳細設計
+ユーザー管理、資産登録、貸出・返却画面など10画面超の設計
+
+Figma/Excel形式の画面設計書修正および作成
+
+入力制御やバリデーション仕様の定義
+
+操作フロー（モーダル、検索フィルター、ページネーション設計）
+
+② DB設計（テーブル設計）
+15以上のテーブル設計（資産、カテゴリ、ユーザー、貸出履歴、棚卸など）
+
+ER図作成、正規化、マイグレーションファイル作成
+
+Eloquentのリレーション（hasMany、belongsToなど）設計
+
+③ プログラム実装（Laravel）
+認証（Laravel Breeze）によるログイン/ログアウト処理実装
+
+Bladeテンプレートによる動的UI構築（条件表示、ループ、パーシャル化）
+
+CRUD処理の実装（資産登録、更新、削除、貸出など）
+
+サービスクラス、リポジトリパターンを用いたビジネスロジック分離
+
+④ 結合テスト
+Excel形式のテストケース表に基づく結合テストの実施
+
+Laravel Feature Test（PHPUnit）による自動化テスト一部導入
+
+テスト結果の記録、不具合修正および再テスト
+
+⑤ その他
+Gitによるブランチ管理、Pull Requestベースの開発フロー
+
+レビュー対応、定例ミーティング参加、進捗報告
+
+# 使用技術
+| 種類      | 内容                                      |
+| ------- | --------------------------------------- |
+| 言語      | PHP 8.1 / JavaScript                    |
+| フレームワーク | Laravel 9 / Laravel Breeze              |
+| フロントエンド | Blade / Bootstrap 5                     |
+| DB      | MySQL 8                                 |
+| 開発環境    | Docker / VSCode          |
+| 管理ツール   | GitHub / Excel                |
+| テスト     | PHPUnit（Laravel Feature Test）、手動テスト（結合） |
+
+
+
+アカウント
+test@mail.com
+test123456
