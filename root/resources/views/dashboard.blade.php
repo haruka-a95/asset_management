@@ -10,7 +10,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
-                    <p class="bg-stone-100">testttt</p>
+                    <a href="{{ route('assets.index') }}"
+                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            資産一覧を見る</a>
                 </div>
             </div>
         </div>

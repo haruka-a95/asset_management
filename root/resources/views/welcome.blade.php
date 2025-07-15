@@ -27,5 +27,7 @@
             <h1 class="text-center">資産管理システム</h1>
 
         </div>
+        <a href="{{ route('login') }}">ログインはこちら</a>
+        <a href="{{ route('register') }}">登録はこちら</a>
     </body>
 </html>
