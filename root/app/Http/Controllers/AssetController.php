@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Department;
+use App\Enums\AssetStatus;
 
 class AssetController extends Controller
 {
@@ -15,12 +17,34 @@ class AssetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $assets = Asset::get();//全件取得
+        $query = Asset::query();
+
+        if ($request->filled('keyword')) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        if ($request->filled('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $assets = $query->with(['category', 'user'])->paginate(10)->appends($request->all());
+
+        $categories = Category::all();
+        $users = User::all();
+
         $count = Asset::count();//件数
-        $users = User::get();
-        return view('assets.index', compact('assets', 'users'));
+
+        return view('assets.index', compact('assets', 'users', 'categories'));
     }
 
     /**
@@ -32,7 +56,8 @@ class AssetController extends Controller
     {
         $categories = Category::all();
         $users = User::all();
-        return view('assets.create', compact('users', 'categories'));
+        $departments = Department::all();
+        return view('assets.create', compact('users', 'categories', 'departments'));
     }
 
     /**
@@ -48,7 +73,7 @@ class AssetController extends Controller
             'asset_number' => 'required|string|max:100|unique:assets',
             'acquisition_date' => 'required|date',
             'price' => 'required|integer',
-            'location' => 'nullable|string|max:255',
+            'location' => 'nullable|exists:departments,id',
             'status' => 'required|string',
             'category_id' => 'nullable|exists:categories,id',
         ]);
@@ -79,7 +104,9 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
-        return view('assets.edit', compact('asset', 'users'));
+        $users = User::all();
+        $departments = Department::all();
+        return view('assets.edit', compact('asset', 'users', 'departments'));
     }
 
     /**
@@ -94,9 +121,13 @@ class AssetController extends Controller
         // バリデーション
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'category' => 'nullable|string|max:255',
-        'value' => 'nullable|numeric',
-        // 他のフィールドも必要に応じて追加
+        'asset_number' => 'required|string|max:100|unique:assets,asset_number,' . $asset->id,
+        'acquisition_date' => 'required|date',
+        'price' => 'required|integer',
+        'location' => 'nullable|exists:departments,id',
+        'status' => 'required|string',
+        'category_id' => 'nullable|exists:categories,id',
+        'user_id' => 'nullable|exists:users,id',
     ]);
 
     // 更新

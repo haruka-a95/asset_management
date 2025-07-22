@@ -23,6 +23,9 @@
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         ユーザー管理
                     </x-nav-link>
+                    <x-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
+                        部署管理
+                    </x-nav-link>
                 </div>
             </div>
 

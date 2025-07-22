@@ -9,6 +9,16 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+            <select name="department_id" id="department_id">
+                <option value="">部署を選択してください</option>
+                @foreach ($departments as $department)
+                    <option value="{{ $department->id }}" @if(old('department_id', $user->department_id ?? '') == $department->id) selected @endif>
+                        {{ $department->name }}
+                    </option>
+                @endforeach
+            </select>
+
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />

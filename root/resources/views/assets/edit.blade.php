@@ -36,9 +36,33 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">設置場所</label>
-                    <input type="text" name="location" class="w-full border-gray-300 rounded-md shadow-sm" value="{{ old('location', $asset->location) }}">
-                    @error('location') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
+                    <label class="block text-sm font-medium text-gray-700">使用場所</label>
+                    <select name="department_id" class="w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="">選択してください</option>
+                        @foreach($departments as $department)
+                            <option value="{{ $department->id }}"
+                                option value="{{ $department->id }}"
+                                    @if(old('department_id', $department->department_id) == $department->id) selected @endif>
+                                    {{ $department->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('status') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">使用者</label>
+                    <select name="user_id" class="w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="">選択してください</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}"
+                                option value="{{ $user->id }}"
+                                    @if(old('user_id', $user->user_id) == $user->id) selected @endif>
+                                    {{ $user->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('status') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="mb-4">

@@ -47,6 +47,21 @@
             @endif
         </div>
 
+        <div class="mt-4">
+            <label for="department_id" class="block font-medium text-sm text-gray-700">部署</label>
+            <select name="department_id" id="department_id" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                <option value="">部署を選択してください</option>
+                @foreach ($departments as $department)
+                    <option value="{{ $department->id }}" @if(old('department_id', $user->department_id ?? '') == $department->id) selected @endif>
+                        {{ $department->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('department_id')
+                <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+            @enderror
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
