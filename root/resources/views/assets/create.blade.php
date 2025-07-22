@@ -41,6 +41,24 @@
                 </div>
 
                 <div class="mb-4">
+                    <select name="user_id">
+                        <option value="">-- 使用者を選択 --</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">
+                                {{ $user->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="category_id">カテゴリ</label>
+                    <select name="category_id" id="category_id">
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">状態</label>
                     <select name="status" class="w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="">選択してください</option>

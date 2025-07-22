@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Category;
 
 class AssetController extends Controller
 {
@@ -17,7 +19,8 @@ class AssetController extends Controller
     {
         $assets = Asset::get();//全件取得
         $count = Asset::count();//件数
-        return view('assets.index', compact('assets'));
+        $users = User::get();
+        return view('assets.index', compact('assets', 'users'));
     }
 
     /**
@@ -27,7 +30,9 @@ class AssetController extends Controller
      */
     public function create()
     {
-        return view('assets.create');
+        $categories = Category::all();
+        $users = User::all();
+        return view('assets.create', compact('users', 'categories'));
     }
 
     /**
@@ -45,6 +50,7 @@ class AssetController extends Controller
             'price' => 'required|integer',
             'location' => 'nullable|string|max:255',
             'status' => 'required|string',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         $validated['user_id'] = Auth::id();
@@ -73,7 +79,7 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
-        return view('assets.edit', compact('asset'));
+        return view('assets.edit', compact('asset', 'users'));
     }
 
     /**
