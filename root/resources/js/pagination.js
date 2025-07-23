@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => {
                     const parser = new DOMParser();
                     const html = parser.parseFromString(res.data, 'text/html');
-                    const newResults = html.querySelector('#results');
+                    const newResults = html.querySelector('#result');
                     result.innerHTML = newResults.innerHTML;
                 })
                 .catch(err => {

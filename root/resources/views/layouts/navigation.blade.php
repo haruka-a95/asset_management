@@ -17,6 +17,9 @@
                     <x-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.*')">
                         資産一覧
                     </x-nav-link>
+                    <x-nav-link :href="route('loan_logs.index')" :active="request()->routeIs('loan_logs.*')">
+                        貸出記録
+                    </x-nav-link>
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         カテゴリ
                     </x-nav-link>

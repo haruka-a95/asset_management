@@ -71,7 +71,9 @@
                         <th class="px-4 py-2">取得日</th>
                         <th class="px-4 py-2">状態</th>
                         <th class="px-4 py-2">使用者</th>
-                        <th class="px-4 py-2">操作</th>
+                        <th class="px-4 py-2">貸出登録</th>
+                        <th class="px-4 py-2">返却登録</th>
+                        <th class="px-4 py-2">そのほか</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,6 +85,28 @@
                             <td class="border px-4 py-2">{{ $asset->acquisition_date }}</td>
                             <td class="border px-4 py-2">{{ $asset->status }}</td>
                             <td class="border px-4 py-2">{{ $asset->user->name ?? '未割当て' }}</td>
+                            <td class="border px-4 py-2">
+                                @if ($asset->status !== \App\Enums\AssetStatus::IN_USE->value)
+                                <form action="{{ route('loan.borrow') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="asset_id" value="{{ $asset->id }}">
+                                    <button type="submit" class="bg-sky-300 p-2 rounded">貸出</button>
+                                </form>
+                                @else
+                                    <button class="bg-gray-300 text-gray-500 p-2 cursor-not-allowed rounded" disabled>貸出中</button>
+                                @endif
+                            </td>
+                            <td class="border px-4 py-2">
+                                @if ($asset->status == \App\Enums\AssetStatus::IN_USE->value)
+                                <form action="{{ route('loan.return') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="asset_id" value="{{ $asset->id }}">
+                                    <button type="submit" class="bg-emerald-200 p-2 rounded">返却</button>
+                                </form>
+                                @else
+                                <button class="bg-gray-300 text-gray-500 p-2 cursor-not-allowed rounded" disabled>返却不可</button>
+                                @endif
+                            </td>
                             <td class="border px-4 py-2">
                                 <a href="{{ route('assets.edit', $asset) }}" class="text-blue-600 hover:underline">編集</a>
                                 <form action="{{ route('assets.destroy', $asset) }}" method="POST" class="inline-block ml-2">

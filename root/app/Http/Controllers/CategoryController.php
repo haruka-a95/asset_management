@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Services\CategoryService;
+use App\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -42,9 +43,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $request->validate(['name' => 'required|string|max:255']);
+        $request->validated();
         $this->categoryService->createCategory($request->only('name'));
         return redirect()->route('categories.index')->with('success', 'カテゴリを作成しました');
     }
@@ -78,9 +79,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(StoreCategoryRequest $request, Category $category)
     {
-        $request->validate(['name' => 'required|string|max:255']);
+        $request->validated();
         $this->categoryService->updateCategory($category, $request->only('name'));
         return redirect()->route('categories.index')->with('カテゴリを更新しました');
     }

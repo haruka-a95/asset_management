@@ -6,6 +6,8 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\LoanLogController;
+use App\Models\LoanLog;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('assets', AssetController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('departments', DepartmentController::class);
+
+    Route::post('/loan/borrow', [LoanLogController::class, 'borrow'])->name('loan.borrow');
+    Route::post('/loan/return', [LoanLogController::class, 'return'])->name('loan.return');
+    Route::get('/loan-logs', [LoanLogController::class, 'index'])->name('loan_logs.index');
 });
 
 require __DIR__.'/auth.php';

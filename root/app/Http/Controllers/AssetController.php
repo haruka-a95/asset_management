@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\AssetService;
 use App\Models\Asset;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAssetRequest;
+use App\Http\Requests\UpdateAssetRequest;
 
 class AssetController extends Controller
 {
@@ -42,18 +44,9 @@ class AssetController extends Controller
         return view('assets.create', compact('categories', 'users', 'departments'));
     }
 
-    public function store(Request $request)
+    public function store(StoreAssetRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'asset_number' => 'nullable|string|max:100|unique:assets',
-            'acquisition_date' => 'required|date',
-            'price' => 'required|integer',
-            'location' => 'nullable|exists:departments,id',
-            'status' => 'required|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'user_id' => 'nullable|exists:users,id',
-        ]);
+        $validated = $request->validated();
 
         // asset_number はカテゴリから自動生成
         $validated['asset_number'] = $this->assetService->generateAssetNumber($validated['category_id']);
@@ -71,18 +64,9 @@ class AssetController extends Controller
         return view('assets.edit', compact('asset', 'users', 'departments', 'categories'));
     }
 
-    public function update(Request $request, Asset $asset)
+    public function update(UpdateAssetRequest $request, Asset $asset)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'asset_number' => 'required|string|max:100|unique:assets,asset_number,' . $asset->id,
-            'acquisition_date' => 'required|date',
-            'price' => 'required|integer',
-            'location' => 'nullable|exists:departments,id',
-            'status' => 'required|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'user_id' => 'nullable|exists:users,id',
-        ]);
+        $validated = $request->validated();
 
         $this->assetService->updateAsset($asset, $validated);
 
