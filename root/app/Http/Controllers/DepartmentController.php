@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Services\DepartmentService;
 
 class DepartmentController extends Controller
 {
+    protected $departmentService;
+
+    public function __construct(DepartmentService $departmentService)
+    {
+        $this->departmentService = $departmentService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
+        $departments = $this->departmentService->getAllDepartments();
         return view('departments.index', compact('departments'));
     }
 
@@ -37,7 +45,7 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        Department::create($request->only('name'));
+        $this->departmentService->createDepartment($request->only('name'));
         return redirect()->route('departments.index')->with('success', '部署を作成しました');
     }
 
@@ -73,7 +81,7 @@ class DepartmentController extends Controller
     public function update(Request $request, Department $department)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        $department->update($request->only('name'));
+        $this->departmentService->updateDepartment($department, $request->only('name'));
         return redirect()->route('departments.index')->with('部署を更新しました');
     }
 
@@ -85,7 +93,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $department->delete();
+        $this->departmentService->deleteDepartment($department);
         return redirect()->route('departments.index')->with('success', '部署を削除しました');
     }
 }

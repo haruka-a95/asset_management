@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Services\CategoryService;
 
 class CategoryController extends Controller
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->categoryService->getAllCategories();
         return view('categories.index', compact('categories'));
     }
 
@@ -37,7 +45,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        Category::create($request->only('name'));
+        $this->categoryService->createCategory($request->only('name'));
         return redirect()->route('categories.index')->with('success', 'カテゴリを作成しました');
     }
 
@@ -73,7 +81,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate(['name' => 'required|string|max:255']);
-        $category->update($request->only('name'));
+        $this->categoryService->updateCategory($category, $request->only('name'));
         return redirect()->route('categories.index')->with('カテゴリを更新しました');
     }
 
@@ -85,7 +93,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $this->categoryService->deleteCategory($category);
         return redirect()->route('categories.index')->with('success', 'カテゴリを削除しました');
     }
 }

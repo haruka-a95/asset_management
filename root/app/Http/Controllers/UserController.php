@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Department;
+use App\Services\DepartmentService;
 
 class UserController extends Controller
 {
+    protected $departmentService;
+
+    public function __construct(DepartmentService $departmentService)
+    {
+        $this->departmentService = $departmentService;
+    }
+
     public function index()
     {
         $users = User::paginate(10);
@@ -16,7 +23,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $departments = Department::all();
+        $departments = $this->departmentService->getAllDepartments();
         return view('users.edit', compact('user', 'departments'));
     }
 
