@@ -56,7 +56,6 @@
                         <option value="">選択してください</option>
                         @foreach($users as $user)
                             <option value="{{ $user->id }}"
-                                option value="{{ $user->id }}"
                                     @if(old('user_id', $user->user_id) == $user->id) selected @endif>
                                     {{ $user->name }}
                             </option>
@@ -64,14 +63,24 @@
                     </select>
                     @error('status') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
-
+                <div class="mb-4">
+                    <label for="category_id">カテゴリ</label>
+                    <select name="category_id" id="category_id">
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" @if(old('category_id', $category->category_id) == $category->id) selected @endif>
+                                {{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">状態</label>
                     <select name="status" class="w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="">選択してください</option>
-                        <option value="使用中" @selected($asset->status == '使用中')>使用中</option>
-                        <option value="保管中" @selected($asset->status == '保管中')>保管中</option>
-                        <option value="廃棄済" @selected($asset->status == '廃棄済')>廃棄済</option>
+                        @foreach(\App\Enums\AssetStatus::cases() as $status)
+                            <option value="{{ $status->value }}" @if(old('status', $status->value) == $status->value) selected @endif>
+                                {{ $status->value }}
+                            </option>
+                        @endforeach
                     </select>
                     @error('status') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>

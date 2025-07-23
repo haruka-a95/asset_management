@@ -18,6 +18,7 @@ class Asset extends Model
         'location',
         'status',
         'user_id',
+        'category_id',
     ];
 
     public function user()

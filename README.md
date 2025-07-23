@@ -10,30 +10,6 @@ Laravel9 のGitHubテンプレートリポジトリです。
 - VSCode (任意)
 - SQLクライアント (任意 「A5:SQL Mk-2」、「DBeaver」等)
 
-## テンプレート導入
-
-導入は、ダウンロードするか、テンプレートからリポジトリを作成してください。
-
-### ダウンロードする場合
-
-「Code」から「Download ZIP」を選択するとダウンロードが可能です。
-
-### リポジトリを作成する場合
-
-#### リポジトリ作成
-
-「Use this template」ボタンで、テンプレートから自身のリポジトリを作成してください。
-
-- テンプレートからリポジトリを作成する
-  - <https://docs.github.com/ja/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template>
-
-#### clone
-
-自身で作成したリポジトリをcloneしてください。
-
-- リポジトリをクローンする
-  - <https://docs.github.com/ja/repositories/creating-and-managing-repositories/cloning-a-repository>
-
 ## 開発環境
 
 Dockerを使って環境を構築します。  

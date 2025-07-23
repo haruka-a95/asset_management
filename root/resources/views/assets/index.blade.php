@@ -10,16 +10,19 @@
         <a href="{{ route('assets.create') }}" class="mb-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">＋ 新規登録</a>
 
     <!-- 検索機能 -->
-     <div class="container bg-white m-3">
+     <div class="container bg-white m-3 p-5">
         <p>検索</p>
-        <form method="GET" action="{{ route('assets.index') }}" class="mb-6">
+        <form method="GET" action="{{ route('assets.index') }}" id="searchForm" class="mb-6">
+            <!-- 資産番号検索 -->
+            <input type="number" name="asset_number" value="{{ request('asset_number') }}" placeholder="資産番号で検索" class="border rounded px-4 py-2 w-full sm:w-1/3">
+
             {{-- 資産名検索 --}}
             <input type="text" name="keyword" value="{{ request('keyword') }}"
-            placeholder="資産名を入力" class="border rounded px-4 py-2 w-full sm:w-1/3">
+            placeholder="資産名で検索" class="border rounded px-4 py-2 w-full sm:w-1/3">
 
             {{-- カテゴリ選択 --}}
             <select name="category_id" class="border rounded px-4 py-2 w-full sm:w-1/4">
-                <option value="">すべてのカテゴリ</option>
+                <option value="">カテゴリで検索</option>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)>
                         {{ $category->name }}
@@ -28,7 +31,7 @@
             </select>
             {{-- 状態選択 --}}
             <select name="status" class="border rounded px-4 py-2 w-full sm:w-1/4">
-                <option value="">ステータス</option>
+                <option value="">ステータスで検索</option>
                 @foreach(\App\Enums\AssetStatus::cases() as $status)
                 <option value="{{ $status->value }}" @selected(request('status') == $status->value)>
                     {{ $status->value }}</option>
@@ -36,7 +39,7 @@
             </select>
             {{-- ユーザー選択 --}}
             <select name="user_id" class="border rounded px-4 py-2 w-full sm:w-1/4">
-                <option value="">すべてのユーザー</option>
+                <option value="">ユーザーで検索</option>
                 @foreach($users as $user)
                     <option value="{{ $user->id }}" @selected(request('user_id') == $user->id)>
                         {{ $user->name }}
@@ -47,12 +50,13 @@
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 検索
             </button>
-            <a href="{{ route('assets.index') }}"
+            <a href="#" id="resetBtn"
                 class="ml-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">
                 リセット
             </a>
         </form>
     </div>
+    <div id="result">
         <p class="mb-2 text-sm text-gray-600">
             {{ $assets->total() }} 件が見つかりました
         </p>
@@ -92,8 +96,11 @@
                 </tbody>
             </table>
             <div class="mt-4">
+                <!-- ページネーション -->
                 {{ $assets->appends(request()->query())->links() }}
             </div>
         </div>
+    </div>
+
     </div>
 </x-app-layout>
