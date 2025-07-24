@@ -42,4 +42,18 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function test_uesers_can_logout():void
+    {
+        $user = User::factory()->create([
+            'password' => bcrypt('password'),
+        ]);
+
+        $this->actingAs($user);
+
+        $response = $this->post('/logout');
+
+        $this->assertGuest();//ログインしてないことを確認
+        $response->assertRedirect('/');
+    }
 }

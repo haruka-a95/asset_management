@@ -23,6 +23,9 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
+
+            // department_idを追加（Departmentファクトリーで作ったものを紐付け）
+            'department_id' => \App\Models\Department::factory(),
         ];
     }
 
