@@ -29,19 +29,15 @@ Dockerを使って環境を構築します。
 基本的にはそのまま使用可能ですが、IPとポートが重複するとコンテナが起動しないので  
 自身の環境に合わせて設定を変えてください。
 
-### compose
 
-以下のコマンドを実行します。
-
+### リポジトリをクローン & ディレクトリ移動 
 ```bash
-# ターミナルで実行
-## ls コマンドで docker-compose.yml があるか確認
-ls docker-compose.yml
-## docker-compose で環境構築  ※ 時間がかかるので注意
-docker-compose up -d
+git clone https://github.com/haruka-a95/asset_management.git
+cd asset_management
 ```
 
-上記コマンドでエラーがなければ環境構築が完了しています。
+### Dockerイメージのビルド＆起動
+docker-compose up -d --build
 
 ### Laravel
 
@@ -50,7 +46,7 @@ Laravel関連のコマンドはDockerで用意した、WEBサーバー（コン�
 ```bash
 # ターミナルで実行
 ## WEBサーバーに入るコマンド（-itの後に入る名称はコンテナ名「{NAME_PREFIX}-web」）
-docker exec -it asset-manager-web
+docker exec -it asset-manager-web bash
 ```
 
 #### composer install
@@ -66,11 +62,19 @@ composer install
 [root/vendor/](./root/vendor/)ディレクトリを削除して、再実行してみましょう。  
 「`successfully`」が出ていれば成功です。
 
+#### Node.jsパッケージのインストールとビルド
+```bash
+# ■ WEBサーバーで入力
+npm install
+npm run dev
+```
+npmをインストール時に脆弱性のエラーが出た場合、以下を試してください。
+```npm audit fix```
+
 #### Laravel初期設定
 
 ```bash
 # ■ WEBサーバーで入力
-cd /var/www/root
 # 「.env」ファイル
 ## 「.env.dev」ファイルを「.env」にコピー
 cp .env.dev .env
@@ -79,24 +83,21 @@ chmod -R 777 bootstrap/cache/
 chmod -R 777 storage/
 ```
 
-### 確認
+## 動作確認
+- Web画面
+ - URL例: http://localhost:81
+ ※ IP・ポートは .env の IP と PORT_WEB を参照
 
-- WEB ※ **IP・ポート番号は [`.env`](./.env) の `IP`・`PORT_WEB` を参照**
-- phpMyAdmin ※ **IP・ポート番号は [`.env`](./.env) の `IP`・`PORT_PHPMYADMIN` を参照**
+- phpMyAdmin
+ - URL例: http://localhost:8081
+ ※ IP・ポートは .env の IP と PORT_PHPMYADMIN を参照
 
-### Laravel設定
+### Laravelのテスト環境設定
+- 日本語設定済み
+- Laravel Debugbar導入済み
+- .env.testing 設定済み
 
-※ **以下は導入済みです**  
-- 言語ファイル
-- `config/app.php` の日本設定
-- Laravel Debugbar
-- `.env.testing` 設定（**migrationは必要** ）
-#### .env.testing設定
-テスト用データベースにmigrationを適用には、以下のコマンドを実行します。  
-```sh
+#### マイグレーション（テスト用DB）
+```bash
 php artisan migrate --env=testing
 ```
-
-## アクセス
-Webアクセス: http://localhost:81
-phpMyAdmin: http://localhost:8081
