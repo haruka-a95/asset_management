@@ -96,3 +96,7 @@ chmod -R 777 storage/
 ```sh
 php artisan migrate --env=testing
 ```
+
+## アクセス
+Webアクセス: http://localhost:81
+phpMyAdmin: http://localhost:8081
