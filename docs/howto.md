@@ -88,7 +88,7 @@ chmod -R 777 storage/
 
 ※ **以下は導入済みです**  
 - 言語ファイル
-- `config/app.php` の日本設定|
+- `config/app.php` の日本設定
 - Laravel Debugbar
 - `.env.testing` 設定（**migrationは必要** ）
 #### .env.testing設定
