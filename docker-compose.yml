@@ -1,5 +1,3 @@
-version: "3.1"
-
 services:
   web:
     container_name: "${NAME_PREFIX}-web"
@@ -8,6 +6,7 @@ services:
       context: "./docker/php"
     ports:
       - "${IP}:${PORT_WEB}:80"
+      - "5173:5173"
     volumes:
       - "./root:/var/www/root"
       - "./root/vendor:/var/www/root/vendor:delegated"

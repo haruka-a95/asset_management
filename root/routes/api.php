@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AssetApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::get('/assets/next-number/{categoryId}', function ($categoryId) {
+    return response()->json([
+        'asset_number' => app(\App\Services\AssetService::class)->generateAssetNumber((int)$categoryId),
+    ]);
 });
