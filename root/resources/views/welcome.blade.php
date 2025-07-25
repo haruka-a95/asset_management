@@ -25,9 +25,8 @@
         <div class="relative flex items-top align-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
 
             <h1 class="text-center">資産管理システム</h1>
-
+            <a href="{{ route('login') }}" class="block">ログインはこちら</a>
+            <a href="{{ route('register') }}" class="block">登録はこちら</a>
         </div>
-        <a href="{{ route('login') }}">ログインはこちら</a>
-        <a href="{{ route('register') }}">登録はこちら</a>
     </body>
 </html>
