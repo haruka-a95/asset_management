@@ -2,15 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\Department;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Department>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
  */
-class DepartmentFactory extends Factory
+class CategoryFactory extends Factory
 {
-    protected $model = Department::class;
+    protected $model = Category::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,7 +20,7 @@ class DepartmentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->company(),
+            'name' => $this->faker->word(),
         ];
     }
 }

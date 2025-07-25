@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class LoanLog extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['user_id', 'asset_id', 'loaned_at', 'returned_at'];
 
     public function user()

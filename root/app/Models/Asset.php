@@ -21,6 +21,11 @@ class Asset extends Model
         'category_id',
     ];
 
+    public function isInUse(): bool
+    {
+        return $this->status === AssetStatus::IN_USE;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -86,7 +86,7 @@
                             <td class="border px-4 py-2">{{ $asset->status }}</td>
                             <td class="border px-4 py-2">{{ $asset->user->name ?? '未割当て' }}</td>
                             <td class="border px-4 py-2">
-                                @if ($asset->status !== \App\Enums\AssetStatus::IN_USE->value)
+                                @if (!$asset->isInUse())
                                 <form action="{{ route('loan.borrow') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="asset_id" value="{{ $asset->id }}">
@@ -97,7 +97,7 @@
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($asset->status == \App\Enums\AssetStatus::IN_USE->value)
+                                @if ($asset->isInUse())
                                 <form action="{{ route('loan.return') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="asset_id" value="{{ $asset->id }}">

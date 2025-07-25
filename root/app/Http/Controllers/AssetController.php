@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\AssetService;
+use App\Services\AssetNumberService;
 use App\Models\Asset;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAssetRequest;
@@ -11,10 +12,12 @@ use App\Http\Requests\UpdateAssetRequest;
 class AssetController extends Controller
 {
     protected $assetService;
+    protected $assetNumberService;
 
-    public function __construct(AssetService $assetService)
+    public function __construct(AssetService $assetService, AssetNumberService $assetNumberService)
     {
         $this->assetService = $assetService;
+        $this->assetNumberService = $assetNumberService;
     }
 
     public function index(Request $request)
@@ -39,7 +42,7 @@ class AssetController extends Controller
         $departments = $this->assetService->getDepartments();
         //資産番号作成
         if (isset($data['category_id'])) {
-            $data['asset_number'] = $this->generateAssetNumber($data['category_id']);
+            $data['asset_number'] = $this->assetNumberService->generate($data['category_id']);
         }
         return view('assets.create', compact('categories', 'users', 'departments'));
     }
@@ -49,7 +52,7 @@ class AssetController extends Controller
         $validated = $request->validated();
 
         // asset_number はカテゴリから自動生成
-        $validated['asset_number'] = $this->assetService->generateAssetNumber($validated['category_id']);
+        $validated['asset_number'] = $this->assetNumberService->generate($validated['category_id']);
 
         $this->assetService->createAsset($validated);
 

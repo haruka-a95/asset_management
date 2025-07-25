@@ -16,6 +16,12 @@
                     @error('name') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
 
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">所在地</label>
+                    <input type="text" name="location" class="w-full border-gray-300 rounded-md shadow-sm" value="{{ old('location') }}">
+                    @error('location') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
+                </div>
+
                 <div class="flex justify-end">
                     <a href="{{ route('departments.index') }}" class="mr-4 text-gray-600 hover:underline">戻る</a>
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">登録</button>

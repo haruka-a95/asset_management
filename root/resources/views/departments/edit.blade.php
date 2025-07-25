@@ -7,7 +7,7 @@
 
     <div class="py-12 max-w-3xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white p-6 shadow-md sm:rounded-lg">
-            <form method="POST" action="{{ route('department.update', $department) }}">
+            <form method="POST" action="{{ route('departments.update', $department) }}">
                 @csrf
                 @method('PUT')
 
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <a href="{{ route('department.index') }}" class="mr-4 text-gray-600 hover:underline">戻る</a>
+                    <a href="{{ route('departments.index') }}" class="mr-4 text-gray-600 hover:underline">戻る</a>
                     <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">更新</button>
                 </div>
             </form>
