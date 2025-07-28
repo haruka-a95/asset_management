@@ -25,6 +25,12 @@ class AssetTest extends TestCase
         $this->app->instance(AssetNumberService::class, $mockAssetNumberService);
     }
 
+        protected function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     /**
      * A basic feature test example.
      *
@@ -101,7 +107,6 @@ class AssetTest extends TestCase
 
         $asset = Asset::factory()->create();
 
-        $this->authenticateUser();
         $category = Category::factory()->create();
 
         $data = [
